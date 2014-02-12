@@ -2,6 +2,8 @@ require "delegate"
 
 module Frosting
   class BasePresenter < SimpleDelegator
+    include Presentation
+
     def initialize(resource, context = nil)
       @context = context
       @wrapped = resource

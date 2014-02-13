@@ -1,4 +1,5 @@
-require "delegate"
+require 'delegate'
+require 'frosting/presentation'
 
 module Frosting
   class BasePresenter < SimpleDelegator

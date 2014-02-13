@@ -1,3 +1,5 @@
+require 'frosting/repository'
+
 module Frosting
   module Presentation
     def present(*args)

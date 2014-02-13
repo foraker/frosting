@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'frosting'
-  s.version     = '0.0.2'
+  s.version     = '0.0.3'
   s.date        = '2014-02-04'
   s.summary     = "Let's make presenters easy."
   s.description = "Adds some methods to your controllers and a base presenter. Get that presentation logic out of your models."

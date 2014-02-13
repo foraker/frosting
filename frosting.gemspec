@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://www.github.com/foraker/frosting'
   s.license     = 'MIT'
 
-  s.add_dependency "active_support"
+  s.add_dependency "activesupport"
 
   s.add_development_dependency 'bundler', '~> 1.3'
   s.add_development_dependency 'rspec', '~> 2.0'

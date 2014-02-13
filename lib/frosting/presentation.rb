@@ -1,16 +1,13 @@
+require 'frosting/repository'
+
 module Frosting
   module Presentation
-    def present(resource, options = {})
-      begin
-        klass = options[:presenter] || "Presenters::#{resource.class.name}".constantize
-        klass.new(resource, view_context)
-      rescue LoadError
-        raise "No such presenter: #{klass}"
-      end
+    def present(*args)
+      Repository.present(*args)
     end
 
-    def present_collection(collection, options = {})
-      collection.map { |resource| present(resource, options) }
+    def present_collection(*args)
+      Repository.present_collection(*args)
     end
   end
 end

@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'frosting'
-  s.version     = '0.0.2'
+  s.version     = '0.0.3'
   s.date        = '2014-02-04'
   s.summary     = "Let's make presenters easy."
   s.description = "Adds some methods to your controllers and a base presenter. Get that presentation logic out of your models."
@@ -9,4 +9,9 @@ Gem::Specification.new do |s|
   s.files       = `git ls-files`.split($/)
   s.homepage    = 'http://www.github.com/foraker/frosting'
   s.license     = 'MIT'
+
+  s.add_dependency "activesupport"
+
+  s.add_development_dependency 'bundler', '~> 1.3'
+  s.add_development_dependency 'rspec', '~> 2.0'
 end

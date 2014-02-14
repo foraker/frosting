@@ -4,12 +4,12 @@ module Frosting
   class Railtie < ::Rails::Railtie
     initializer 'frosting.presentation' do
       ActiveSupport.on_load(:action_controller) do
-        def present(resource)
-          Repository.present(resource, view_context)
+        define_method :present do |resource|
+          Repository.present(resource, { context: view_context })
         end
 
-        def present_collection(resources)
-          Repository.present_collection(resources, view_context)
+        define_method :present_collection do |resources, options|
+          Repository.present_collection(resources, { context: view_context }.merge(options))
         end
       end
     end

@@ -43,11 +43,30 @@ module Frosting
     end
 
     describe ".present_collection" do
-      it "presents each item in the collection with options" do
-        resource = double
-        described_class.should_receive(:present)
+      class Collection < Array
+        def test_method
+          "cats"
+        end
+      end
+
+      let(:resource) { double }
+      let(:presented_resource) { double }
+      let(:presented_collection) do
+        described_class.present_collection(Collection.new.push(resource), {option: :val})
+      end
+
+      before do
+        described_class.stub(:present)
           .with(resource, {option: :val})
-        described_class.present_collection([resource], {option: :val})
+          .and_return(presented_resource)
+      end
+
+      it "presents each item in the collection with options" do
+        expect(presented_collection.each.to_a).to eq [presented_resource]
+      end
+
+      it "still acts like the original collection" do
+        expect(presented_collection.test_method).to eq "cats"
       end
     end
   end

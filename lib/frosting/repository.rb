@@ -1,4 +1,5 @@
 require "active_support/core_ext/string/inflections"
+require "active_support/core_ext/module/delegation"
 
 module Frosting
   class Repository
@@ -12,7 +13,26 @@ module Frosting
     end
 
     def self.present_collection(collection, options = {})
-      collection.map { |resource| present(resource, options) }
+      PresentedCollection.new(collection, options)
+    end
+  end
+
+  class PresentedCollection < SimpleDelegator
+    include Enumerable
+
+    delegate :each, to: :presented_collection
+
+    def initialize(collection, options)
+      @options = options
+      super(collection)
+    end
+
+    private
+
+    def presented_collection
+      __getobj__.map do |resource|
+        Repository.present(resource, @options)
+      end
     end
   end
 end

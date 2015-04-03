@@ -35,6 +35,19 @@ module Frosting
         its(:context)  { should eq context }
       end
 
+      context "specifying a presenter class via proc" do
+        subject do
+          described_class.present(resource, {
+            context:   context,
+            presenter: ->(resource) { Presenters::Test::Alternative }
+          })
+        end
+
+        it { should be_instance_of(Presenters::Test::Alternative) }
+        its(:resource) { should eq resource }
+        its(:context)  { should eq context }
+      end
+
       it "throws an exception when the resource has no presenter" do
         class Test::OtherResource ; end
         resource = Test::OtherResource.new

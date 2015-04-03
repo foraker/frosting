@@ -3,13 +3,20 @@ require "active_support/core_ext/module/delegation"
 
 module Frosting
   class Repository
+    def self.infer_presenter(resource)
+      "Presenters::#{resource.class.name}".constantize
+    end
+
+    def self.procify(arg)
+      arg.respond_to?(:call) ? arg : Proc.new { arg }
+    end
+
     def self.present(resource, options = {})
-      begin
-        klass = options[:presenter] || "Presenters::#{resource.class.name}".constantize
-        klass.new(resource, options[:context])
-      rescue LoadError
-        raise "No such presenter: #{klass}"
-      end
+      klass = options.fetch(:presenter) { infer_presenter(resource) }
+      klass = procify(klass).call(resource)
+      klass.new(resource, options.fetch(:context))
+    rescue LoadError
+      raise "No such presenter: #{klass}"
     end
 
     def self.present_collection(collection, options = {})

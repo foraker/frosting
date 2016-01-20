@@ -23,7 +23,7 @@ module Frosting
     private_class_method :infer_presenter
 
     def self.procify(arg)
-      arg.respond_to?(:call) ? arg : proc { arg }
+      arg.respond_to?(:call) ? arg : lambda { |_| arg }
     end
     private_class_method :procify
   end

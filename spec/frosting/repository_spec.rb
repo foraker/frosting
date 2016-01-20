@@ -35,19 +35,53 @@ module Frosting
         its(:context)  { should eq context }
       end
 
+      context "specifying a presenter class via proc" do
+        subject do
+          described_class.present(resource, {
+            context:   context,
+            presenter: ->(resource) { Presenters::Test::Alternative }
+          })
+        end
+
+        it { should be_instance_of(Presenters::Test::Alternative) }
+        its(:resource) { should eq resource }
+        its(:context)  { should eq context }
+      end
+
       it "throws an exception when the resource has no presenter" do
         class Test::OtherResource ; end
         resource = Test::OtherResource.new
-        expect { described_class.present(resource, context: context) }.to raise_error(NameError)
+        expect {
+          described_class.present(resource, context: context)
+        }.to raise_error(Frosting::Repository::PresenterMissingError)
       end
     end
 
     describe ".present_collection" do
-      it "presents each item in the collection with options" do
-        resource = double
-        described_class.should_receive(:present)
+      class Collection < Array
+        def test_method
+          "cats"
+        end
+      end
+
+      let(:resource) { double }
+      let(:presented_resource) { double }
+      let(:presented_collection) do
+        described_class.present_collection(Collection.new.push(resource), {option: :val})
+      end
+
+      before do
+        allow(described_class).to receive(:present)
           .with(resource, {option: :val})
-        described_class.present_collection([resource], {option: :val})
+          .and_return(presented_resource)
+      end
+
+      it "presents each item in the collection with options" do
+        expect(presented_collection.each.to_a).to eq [presented_resource]
+      end
+
+      it "still acts like the original collection" do
+        expect(presented_collection.test_method).to eq "cats"
       end
     end
   end

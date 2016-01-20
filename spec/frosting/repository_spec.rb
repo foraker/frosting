@@ -69,7 +69,7 @@ module Frosting
       end
 
       before do
-        described_class.stub(:present)
+        allow(described_class).to receive(:present)
           .with(resource, {option: :val})
           .and_return(presented_resource)
       end

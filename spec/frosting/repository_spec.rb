@@ -51,7 +51,9 @@ module Frosting
       it "throws an exception when the resource has no presenter" do
         class Test::OtherResource ; end
         resource = Test::OtherResource.new
-        expect { described_class.present(resource, context: context) }.to raise_error(NameError)
+        expect {
+          described_class.present(resource, context: context)
+        }.to raise_error(Frosting::Repository::PresenterMissingError)
       end
     end
 

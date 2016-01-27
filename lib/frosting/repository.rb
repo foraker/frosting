@@ -31,11 +31,15 @@ module Frosting
   class PresentedCollection < SimpleDelegator
     include Enumerable
 
-    delegate :each, to: :presented_collection
+    delegate :each, :to_a, to: :presented_collection
 
     def initialize(collection, options)
       @options = options
       super(collection)
+    end
+
+    def +(other)
+      to_a + other.to_a
     end
 
     private

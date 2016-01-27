@@ -77,11 +77,16 @@ module Frosting
       end
 
       it "presents each item in the collection with options" do
-        expect(presented_collection.each.to_a).to eq [presented_resource]
+        expect(presented_collection.to_a).to eq [presented_resource]
       end
 
       it "still acts like the original collection" do
         expect(presented_collection.test_method).to eq "cats"
+      end
+
+      it "allows addition of presented collections" do
+        expect((presented_collection + presented_collection).to_a).
+          to eq [presented_resource, presented_resource]
       end
     end
   end

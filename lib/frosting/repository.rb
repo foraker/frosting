@@ -8,7 +8,7 @@ module Frosting
     def self.present(resource, options = {})
       klass = options.fetch(:presenter) { infer_presenter(resource) }
       klass = procify(klass).call(resource)
-      klass.new(resource, options[:context])
+      klass.to_s.constantize.new(resource, options[:context])
     rescue LoadError, NameError
       raise PresenterMissingError.new("No such presenter: #{klass}")
     end
@@ -18,7 +18,7 @@ module Frosting
     end
 
     def self.infer_presenter(resource)
-      "Presenters::#{resource.class.name}".constantize
+      "Presenters::#{resource.class.name}"
     end
     private_class_method :infer_presenter
 

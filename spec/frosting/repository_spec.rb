@@ -53,7 +53,10 @@ module Frosting
         resource = Test::OtherResource.new
         expect {
           described_class.present(resource, context: context)
-        }.to raise_error(Frosting::Repository::PresenterMissingError)
+        }.to raise_error(
+          Frosting::Repository::PresenterMissingError,
+          "No such presenter: Presenters::Test::OtherResource"
+        )
       end
     end
 

@@ -5,6 +5,14 @@ module Frosting
   class BasePresenter < SimpleDelegator
     include Presentation
 
+    def self.presents_super(*methods, options: {})
+      methods.each do |method|
+        define_method(method) do
+          present super(), options.merge(context: @context)
+        end
+      end
+    end
+
     def initialize(resource, context = nil)
       @context = context
       @wrapped = resource

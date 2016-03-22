@@ -36,6 +36,28 @@ You defined `#old?` in your model because it's not a presentation concern. Good 
 
 You can also call `present_collection @posts` should you be dealing with a collection of posts and want them all to be presented.
 
+## Presenting Associations
+
+As an additional trick, if you find yourself writing code like:
+
+```ruby
+def user
+  present super(), context: @context
+end
+```
+
+in order to have your presented `Post` return a presenter for the associated `User`, then you can save some typing with:
+
+```ruby
+presents_super :user
+```
+
+The `presents_super` method accepts `options`, so you can specify a presenter:
+
+```ruby
+presents_super :user, options: { presenter: SomeCustomPresenter }
+```
+
 ## About Foraker Labs
 
 ![Foraker Logo](http://assets.foraker.com/attribution_logo.png)

@@ -5,10 +5,13 @@ module Frosting
   class BasePresenter < SimpleDelegator
     include Presentation
 
-    def self.presents_super(*methods, options: {})
-      methods.each do |method|
+    def self.presents_super(*arguments)
+      options = arguments.last.is_a?(Hash) ? arguments.pop : {}
+      present_method = options.delete(:collection) ? :present_collection : :present
+
+      arguments.each do |method|
         define_method(method) do
-          present super(), options.merge(context: @context)
+          send(present_method, super(), options.merge(context: @context))
         end
       end
     end

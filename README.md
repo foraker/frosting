@@ -52,10 +52,16 @@ in order to have your presented `Post` return a presenter for the associated `Us
 presents_super :user
 ```
 
-The `presents_super` method accepts `options`, so you can specify a presenter:
+The `presents_super` method accepts options, so you can specify a presenter:
 
 ```ruby
-presents_super :user, options: { presenter: SomeCustomPresenter }
+presents_super :user, presenter: SomeCustomPresenter
+```
+
+You can also use `presents_super` for collections, by passing the `collection` option:
+
+```ruby
+presents_super :users, collection: true
 ```
 
 ## About Foraker Labs
@@ -65,4 +71,3 @@ presents_super :user, options: { presenter: SomeCustomPresenter }
 Foraker Labs builds exciting web and mobile apps in Boulder, CO. Our work powers a wide variety of businesses with many different needs. We love open source software, and we're proud to contribute where we can. Interested to learn more? [Contact us today](https://www.foraker.com/contact-us).
 
 This project is maintained by Foraker Labs. The names and logos of Foraker Labs are fully owned and copyright Foraker Design, LLC.
-
